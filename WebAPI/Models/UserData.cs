@@ -1,10 +1,10 @@
-﻿namespace WebAPI.RequestsDTO.Users;
+﻿namespace WebAPI.Models;
 
-public class CreateUserRequest
+public class UserData
 {
-    public string Login { get; set; }
+    public int Id { get; set; }
 
-    public string Password { get; set; }
+    public string HashMD5 { get; set; }
 
     public string FirstName { get; set; }
 
