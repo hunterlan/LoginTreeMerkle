@@ -22,5 +22,5 @@ public class CreateUserRequest
 
     public string? PhoneNumber { get; set; }
 
-    public uint Age { get; set; }
+    public int Age { get; set; }
 }

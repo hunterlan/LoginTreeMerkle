@@ -1,4 +1,6 @@
 global using FastEndpoints;
+global using FluentValidation;
+
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Helpers;
 
