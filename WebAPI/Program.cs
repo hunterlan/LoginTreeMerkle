@@ -19,6 +19,7 @@ builder.Services.AddSwaggerDoc(settings =>
 });
 
 var app = builder.Build();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseFastEndpoints();
 app.UseOpenApi();
