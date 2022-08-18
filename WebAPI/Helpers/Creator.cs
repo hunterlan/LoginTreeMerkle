@@ -11,48 +11,48 @@ public class Creator : ICreator
         var encryptedPassword = EncryptPassword(password, salt);
         
         using SHA512 sha512 = SHA512.Create();
-        var loginHash = Encoding.Default.GetString(sha512.ComputeHash(Encoding.UTF8.GetBytes(login)));
-        var passwordHash = Encoding.Default.GetString(sha512.ComputeHash(Encoding.UTF8.GetBytes(encryptedPassword)));
-        var lpHash = Encoding.Default.GetString(
+        var loginHash = Convert.ToBase64String(sha512.ComputeHash(Encoding.UTF8.GetBytes(login)));
+        var passwordHash = Convert.ToBase64String(sha512.ComputeHash(Encoding.UTF8.GetBytes(encryptedPassword)));
+        var lpHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(loginHash + passwordHash)));
 
 
-        var firstNameHash = Encoding.Default.GetString(
+        var firstNameHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.FirstName)));
-        var lastNameHash = Encoding.Default.GetString(
+        var lastNameHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.LastName)));
-        var flnHash = Encoding.Default.GetString(
+        var flnHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(firstNameHash + lastNameHash)));
 
-        var countryHash = Encoding.Default.GetString(
+        var countryHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.Country)));
-        var cityHash = Encoding.Default.GetString(
+        var cityHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.City)));
-        var ccHash = Encoding.Default.GetString(
+        var ccHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(countryHash + cityHash)));
 
-        var emailHash = Encoding.Default.GetString(
+        var emailHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.Email)));
-        var regionHash = Encoding.Default.GetString(
+        var regionHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.Region ?? "")));
-        var erHash = Encoding.Default.GetString(
+        var erHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(emailHash + regionHash)));
 
-        var ageHash = Encoding.Default.GetString(sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.Age.ToString())));
-        var postalCodeHash = Encoding.Default.GetString(sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.PostalCode ?? "")));
-        var apHash = Encoding.Default.GetString(
+        var ageHash = Convert.ToBase64String(sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.Age.ToString())));
+        var postalCodeHash = Convert.ToBase64String(sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.PostalCode ?? "")));
+        var apHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(ageHash + postalCodeHash)));
 
         var phoneNumberHash = sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.PhoneNumber ?? ""));
 
-        return Encoding.Default.GetString(
+        return Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(lpHash + flnHash + ccHash + erHash + apHash + phoneNumberHash)));
     }
 
     public string CreateHashOnData(UserData userData)
     {
         using MD5 creator = MD5.Create();
-        return Encoding.Default.GetString(creator.ComputeHash(Encoding.UTF8.GetBytes(userData.FirstName + userData.LastName +
+        return Convert.ToBase64String(creator.ComputeHash(Encoding.UTF8.GetBytes(userData.FirstName + userData.LastName +
                                                    userData.City + userData.Country + userData.Email)));
     }
 
@@ -62,6 +62,6 @@ public class Creator : ICreator
         //From String to byte array
         byte[] sourceBytes = Encoding.UTF8.GetBytes(password + salt);
         byte[] hashBytes = sha512Hash.ComputeHash(sourceBytes);
-        return BitConverter.ToString(hashBytes).Replace("-", String.Empty);
+        return BitConverter.ToString(hashBytes).Replace("-", string.Empty);
     }
 }
