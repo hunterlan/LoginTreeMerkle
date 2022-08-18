@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FastEndpoints.Security;
+using Microsoft.EntityFrameworkCore;
 using WebAPI.Helpers;
 using WebAPI.Models;
 using WebAPI.RequestsDTO.Users;
@@ -28,10 +29,13 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest>
     public override async Task HandleAsync(CreateUserRequest req, CancellationToken ct)
     {
         Logger.LogInformation($"Attempt to create user {req.Login}");
-        var response = new CreateUserResponse() { IsCreated = true };
+        // var response = new CreateUserResponse() { IsCreated = true };
+        dynamic response;
+        bool isError = false;
 
         try
         {
+            response = new CreateUserResponse();
             var mappedUserData = MapUserData(req);
             mappedUserData.HashMD5 = _creator.CreateHashOnData(mappedUserData);
             var mappedUser = MapUser(req.Login, req.Password, mappedUserData);
@@ -40,14 +44,22 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest>
             await _context.UserData.AddAsync(mappedUserData, ct);
 
             await _context.SaveChangesAsync(ct);
+
+            response.Login = mappedUser.Login;
+            response.Data = mappedUserData;
+            response.Token = JWTBearer.CreateToken(
+                signingKey: Config.GetSection("JWTSigninKey").Value,
+                expireAt: DateTime.UtcNow.AddHours(1),
+                claims: new[] { ("Login", req.Login), ("Email", req.Email) });
         }
         catch (Exception ex)
         {
             Logger.LogError(ex.Message);
-            response.IsCreated = false;
+            response = new { Message = ex.Message };
+            isError = true;
         }
 
-        await SendAsync(response, statusCode: response.IsCreated ? 200 : 500, cancellation: ct);
+        await SendAsync(response, statusCode: isError ? 500 : 200, cancellation: ct);
     }
 
     private User MapUser(string login, string password, UserData data)
