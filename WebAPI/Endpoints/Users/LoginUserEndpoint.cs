@@ -36,8 +36,12 @@ public class LoginUserEndpoint : Endpoint<LoginUserRequest>
         }
         catch (Exception ex)
         {
-            var exResponse = new { Message = ex.Message };
-            await SendAsync(exResponse, StatusCodes.Status500InternalServerError, ct);
+            var exResponse = new ErrorResponse
+            {
+                Message = ex.Message,
+                StatusCode = StatusCodes.Status500InternalServerError
+            };
+            await SendAsync(exResponse, exResponse.StatusCode, ct);
             return;
         }
 
@@ -73,7 +77,11 @@ public class LoginUserEndpoint : Endpoint<LoginUserRequest>
             }
         }
 
-        var errorResponse = new { Message = "Invalid credential data" };
+        var errorResponse = new ErrorResponse
+        {
+            StatusCode = StatusCodes.Status400BadRequest,
+            Message = "Invalid credentials sent!"
+        };
         await SendAsync(errorResponse, StatusCodes.Status400BadRequest, ct);
     }
 }

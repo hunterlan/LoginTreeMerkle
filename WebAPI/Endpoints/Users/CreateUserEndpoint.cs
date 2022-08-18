@@ -55,18 +55,20 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest>
         catch (Exception ex)
         {
             Logger.LogError(ex.Message);
-            response = new { Message = ex.Message };
+            response = new ErrorResponse();
+            response.Message = ex.Message;
+            response.StatusCode = StatusCodes.Status500InternalServerError;
             isError = true;
         }
 
-        await SendAsync(response, statusCode: isError ? 500 : 200, cancellation: ct);
+        await SendAsync(response, statusCode: isError ? StatusCodes.Status500InternalServerError : StatusCodes.Status200OK, cancellation: ct);
     }
 
     private User MapUser(string login, string password, UserData data)
     {
         var hashedMerkleTree =
             _creator.CreateMerkleHashTree(data, login, password, Config.GetSection("Salt").Value);
-        var newUser = new User() {Login = login, MarkleHashTree = hashedMerkleTree};
+        var newUser = new User() { Login = login, MarkleHashTree = hashedMerkleTree };
 
         return newUser;
     }
