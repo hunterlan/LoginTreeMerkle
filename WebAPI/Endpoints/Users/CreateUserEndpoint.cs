@@ -37,7 +37,7 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest>
         {
             response = new CreateUserResponse();
             var mappedUserData = MapUserData(req);
-            mappedUserData.HashMD5 = _creator.CreateHashOnData(mappedUserData);
+            mappedUserData.Key = _creator.CreateHashOnData(mappedUserData);
             var mappedUser = MapUser(req.Login, req.Password, mappedUserData);
 
             await _context.Users.AddAsync(mappedUser, ct);

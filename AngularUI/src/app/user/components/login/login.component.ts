@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginUser } from '../../models/login-user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
     key: new FormControl('', [Validators.required])
   });
 
-  constructor() { }
+  constructor(private readonly userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -25,8 +26,11 @@ export class LoginComponent implements OnInit {
   submit() {
     console.log(this.loginForm.value);
     if (this.loginForm.valid) {
-      const login = new LoginUser(this.loginForm.value.login as string, this.loginForm.value.password as string,
+      const form = new LoginUser(this.loginForm.value.login as string, this.loginForm.value.password as string,
         this.loginForm.value.key as string);
+      this.userService.login(form).subscribe(result => {
+        console.log(result);
+      });
     }
   }
 

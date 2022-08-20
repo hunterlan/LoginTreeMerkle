@@ -4,7 +4,7 @@ public class UserData
 {
     public int Id { get; set; }
 
-    public string HashMD5 { get; set; }
+    public string Key { get; set; }
 
     public string FirstName { get; set; }
 

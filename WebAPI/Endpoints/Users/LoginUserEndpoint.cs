@@ -32,7 +32,7 @@ public class LoginUserEndpoint : Endpoint<LoginUserRequest>
         try
         {
             foundUser = await _context.Users.FirstOrDefaultAsync(u => u.Login == req.Login, cancellationToken: ct);
-            userDatas = _context.UserData.Where(u => u.HashMD5.Equals(req.DataMD5)).ToList();
+            userDatas = _context.UserData.Where(u => u.Key.Equals(req.Key)).ToList();
         }
         catch (Exception ex)
         {

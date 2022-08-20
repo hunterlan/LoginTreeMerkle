@@ -14,7 +14,7 @@ public class LoginUserValidator : Validator<LoginUserRequest>
             .NotEmpty()
             .WithMessage("Password shouldn't be empty");
 
-        RuleFor(u => u.DataMD5)
+        RuleFor(u => u.Key)
             .NotEmpty()
             .WithMessage("Key MD5 shouldn't be empty");
     }

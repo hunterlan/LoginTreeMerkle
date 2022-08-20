@@ -13,7 +13,7 @@ public class LoginUserSummary : Summary<LoginUserEndpoint>
         ExampleRequest = new LoginUserRequest
         {
             Login = "loginUser",
-            DataMD5 = "MD5 hash",
+            Key = "MD5 hash",
             Password = "userPassowrd"
         };
         Response<LoginUserResponse>(200, "OK response with body.");
