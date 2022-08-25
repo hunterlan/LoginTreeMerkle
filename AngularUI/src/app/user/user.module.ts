@@ -9,12 +9,19 @@ import {MatInputModule} from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
+import { DetailsComponent } from './components/details/details.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DeleteDialogComponent } from './components/details/dialogs/delete-dialog/delete-dialog.component';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    DetailsComponent,
+    DeleteDialogComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +30,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     ReactiveFormsModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
+    MatDialogModule,
+    RouterModule
   ]
 })
 export class UserModule { }

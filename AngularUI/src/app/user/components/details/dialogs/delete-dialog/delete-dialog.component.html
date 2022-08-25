@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Deleting</h1>
+<div mat-dialog-content>
+  Are sure to delete your account? This action cannot be reverted.
+</div>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancel</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button [mat-dialog-close]="true">Delete</button>
+</mat-dialog-actions>

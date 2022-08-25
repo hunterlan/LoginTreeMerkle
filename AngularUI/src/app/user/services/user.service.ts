@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { LoginUser } from '../models/login-user';
@@ -15,5 +15,19 @@ export class UserService {
 
   login(user: LoginUser) {
     return this.httpClient.post<User>(this.finalUrl + '/login', user);
+  }
+
+  delete(login: string, email: string) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        login,
+        email,
+      },
+    };
+
+    return this.httpClient.delete(`${this.finalUrl}/delete`, options);
   }
 }

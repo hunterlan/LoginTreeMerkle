@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/helpers/authentication.service';
 import { LoginUser } from '../../models/login-user';
 import { UserService } from '../../services/user.service';
 
@@ -18,18 +20,24 @@ export class LoginComponent implements OnInit {
     key: new FormControl('', [Validators.required])
   });
 
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly authService: AuthenticationService,
+              private readonly router: Router) {
+      if (this.authService.currentUserValue && this.authService.currentUserValue.login !== '') {
+        this.router.navigate(['/details']);
+      }
+  }
 
   ngOnInit(): void {
   }
 
   submit() {
-    console.log(this.loginForm.value);
     if (this.loginForm.valid) {
       const form = new LoginUser(this.loginForm.value.login as string, this.loginForm.value.password as string,
         this.loginForm.value.key as string);
-      this.userService.login(form).subscribe(result => {
-        console.log(result);
+      this.authService.login(form).subscribe(result => {
+        this.router.navigate(['/details']);
+      }, error => {
+        console.error(error);
       });
     }
   }
