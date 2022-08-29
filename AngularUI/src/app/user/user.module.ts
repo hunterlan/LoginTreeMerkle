@@ -14,6 +14,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteDialogComponent } from './components/details/dialogs/delete-dialog/delete-dialog.component';
 import {RouterModule} from '@angular/router';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {RouterModule} from '@angular/router';
     HttpClientModule,
     MatCardModule,
     MatDialogModule,
-    RouterModule
+    RouterModule,
+    MatAutocompleteModule
   ]
 })
 export class UserModule { }
