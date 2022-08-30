@@ -14,14 +14,6 @@ export class UserService {
 
   constructor(private readonly httpClient: HttpClient) { }
 
-  create(createUser: CreateUser) {
-    return this.httpClient.post<User>(this.finalUrl + '/signup', createUser);
-  }
-
-  login(user: LoginUser) {
-    return this.httpClient.post<User>(this.finalUrl + '/login', user);
-  }
-
   delete(login: string, email: string) {
     const options = {
       headers: new HttpHeaders({

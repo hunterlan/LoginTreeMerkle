@@ -1,22 +1,25 @@
-<div >
+
   <div class="CenterElement" *ngIf="!hideFirstPart" [formGroup]="signupForm">
-    <a mat-button [routerLink]="['/']"><h2>Tree merkle</h2></a>
+    <button mat-button [routerLink]="['/']"><h2>Tree merkle</h2></button>
     <h3>Registration</h3>
     <mat-form-field appearance="standard">
       <mat-label>Login</mat-label>
       <input matInput placeholder="user12345" formControlName="login">
+      <mat-error *ngIf="signupForm.controls.login.invalid">Minimal length is 6</mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Password</mat-label>
       <input matInput formControlName="password">
+      <mat-error *ngIf="signupForm.controls.password.invalid">Password should contain at least one number, lower, upper, and special symbol.</mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Confirm password</mat-label>
       <input matInput formControlName="confirmPassword">
+      <mat-error *ngIf="signupForm.controls.confirmPassword.invalid">Not a valid email</mat-error>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Email</mat-label>
-      <input matInput type="email">
+      <input matInput type="email" formControlName="email">
       <mat-error *ngIf="signupForm.controls.email.invalid">Not a valid email</mat-error>
     </mat-form-field>
   </div>
@@ -24,11 +27,11 @@
     <h3>Personal data</h3>
     <mat-form-field appearance="standard">
       <mat-label>First name</mat-label>
-      <input matInput formControlName="name">
+      <input matInput formControlName="firstName">
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Last name</mat-label>
-      <input matInput formControlName="name">
+      <input matInput formControlName="lastName">
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>City</mat-label>
@@ -64,5 +67,4 @@
     <button mat-button (click)="back()" *ngIf="hideFirstPart">Back</button>
     <button mat-button (click)="action()">{{hideFirstPart ? 'Sign up' : 'Next'}}</button>
   </div>
-</div>
 
