@@ -49,7 +49,11 @@ public class CreateUserValidator : Validator<CreateUserRequest>
             
 
         RuleFor(x => x.PhoneNumber)
+            .Empty()
+            .When(x => string.IsNullOrWhiteSpace(x.PhoneNumber))
+            .NotEmpty()
             .Matches(new Regex(@"^\+?\d+$"))
+            .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber))
             .WithMessage("Invalid phone number!");
     }
 }
