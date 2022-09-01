@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/helpers/authentication.service';
+import { SharedSnackBarService } from 'src/app/shared/services/shared-snack-bar.service';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { KeyDialogComponent } from './dialogs/key-dialog/key-dialog.component';
 
 @Component({
   selector: 'app-details',
@@ -15,6 +17,7 @@ export class DetailsComponent implements OnInit {
   currentUser: User;
 
   constructor(private readonly authService: AuthenticationService,
+              private readonly barService: SharedSnackBarService,
               private readonly userService: UserService,
               private readonly dialog: MatDialog) {
     this.currentUser = new User();
@@ -22,6 +25,11 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
+
+    if (this.authService.isUserSignup) {
+      this.authService.isUserSignup = false;
+      this.showKeyDialog();
+    }
   }
 
   delete() {
@@ -32,6 +40,9 @@ export class DetailsComponent implements OnInit {
         this.userService.delete(this.currentUser.login, this.currentUser.data.email).subscribe(() => {
           this.authService.logout();
           location.reload();
+        }, error => {
+          console.log(error);
+          this.barService.show('Error!');
         });
       }
     });
@@ -39,5 +50,9 @@ export class DetailsComponent implements OnInit {
 
   change() {
 
+  }
+
+  private showKeyDialog() {
+    const dialogRef = this.dialog.open(KeyDialogComponent,  {data: this.currentUser.data.key});
   }
 }

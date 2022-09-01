@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Attention</h1>
+<div mat-dialog-content>
+  <p>This is your key: </p>
+  <div class="keyContent">
+    <mat-form-field appearance="standard">
+      <mat-label>Key</mat-label>
+      <input matInput [(ngModel)]="keyValue" [value]="keyValue">
+    </mat-form-field>
+    <button mat-icon-button [cdkCopyToClipboard]="keyValue">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+  <p>Keep it in secret and reliably place. If you lose this key, you will never
+    get an access to an account.
+  </p>
+</div>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>

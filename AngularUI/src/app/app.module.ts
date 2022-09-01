@@ -12,6 +12,7 @@ import { AuthenticationService } from './helpers/authentication.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatSnackBarModule,
     UserModule,
     BrowserAnimationsModule,
     MatButtonModule

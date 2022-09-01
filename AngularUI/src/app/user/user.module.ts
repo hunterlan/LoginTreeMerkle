@@ -15,6 +15,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteDialogComponent } from './components/details/dialogs/delete-dialog/delete-dialog.component';
 import {RouterModule} from '@angular/router';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { KeyDialogComponent } from './components/details/dialogs/key-dialog/key-dialog.component';
+import { FormsModule } from '@angular/forms';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 
 @NgModule({
@@ -22,10 +25,12 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     LoginComponent,
     SignupComponent,
     DetailsComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    KeyDialogComponent
   ],
   imports: [
     CommonModule,
+    ClipboardModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
@@ -35,7 +40,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatCardModule,
     MatDialogModule,
     RouterModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    FormsModule
   ]
 })
 export class UserModule { }

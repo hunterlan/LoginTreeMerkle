@@ -6,6 +6,7 @@ import {map, Observable} from 'rxjs';
 import { CreateUser } from '../../models/create-user';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/helpers/authentication.service';
+import { SharedSnackBarService } from 'src/app/shared/services/shared-snack-bar.service';
 
 @Component({
   selector: 'app-signup',
@@ -37,6 +38,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   })
 
   constructor(private readonly authService: AuthenticationService,
+              private readonly barService: SharedSnackBarService,
               private readonly countryService: CountryService,
               private readonly router: Router) { }
 
@@ -62,9 +64,14 @@ export class SignupComponent implements OnInit, OnDestroy {
         personalData.firstName ?? '', personalData.lastName ?? '', signupData.email ?? '',
         personalData.country ?? '', personalData.city ?? '', personalData.region ?? '',
         personalData.postalCode ?? '', personalData.phoneNumber ?? '', personalData.age ?? 0);
-        this.authService.create(dataUser).subscribe(() => {
-          this.authService.isUserSignup = true;
+        this.authService.create(dataUser).subscribe(
+          {
+          next: () => {this.authService.isUserSignup = true;
           this.router.navigate(['/details']);
+          },
+          error: (e) => {
+            console.log(e);
+          }
         });
       }
     }

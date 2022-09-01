@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/helpers/authentication.service';
+import { SharedSnackBarService } from 'src/app/shared/services/shared-snack-bar.service';
 import { LoginUser } from '../../models/login-user';
 import { UserService } from '../../services/user.service';
 
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(private readonly authService: AuthenticationService,
+              private readonly barService: SharedSnackBarService,
               private readonly router: Router) {
       if (this.authService.currentUserValue && this.authService.currentUserValue.login !== '') {
         this.router.navigate(['/details']);
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/details']);
       }, error => {
         console.error(error);
+        this.barService.show('Error!');
       });
     }
   }
