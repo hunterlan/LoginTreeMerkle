@@ -37,12 +37,14 @@ export class DetailsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.userService.delete(this.currentUser.login, this.currentUser.data.email).subscribe(() => {
+        this.userService.delete(this.currentUser.login, this.currentUser.data.email).subscribe({
+          next: () => {
           this.authService.logout();
           location.reload();
-        }, error => {
-          console.log(error);
-          this.barService.show('Error!');
+          },
+          error: (e) => {
+            this.barService.showError(e);
+          }
         });
       }
     });

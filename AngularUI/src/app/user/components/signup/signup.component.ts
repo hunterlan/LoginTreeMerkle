@@ -70,7 +70,7 @@ export class SignupComponent implements OnInit, OnDestroy {
           this.router.navigate(['/details']);
           },
           error: (e) => {
-            console.log(e);
+            this.barService.showError(e);
           }
         });
       }

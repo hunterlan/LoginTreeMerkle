@@ -36,11 +36,13 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const form = new LoginUser(this.loginForm.value.login as string, this.loginForm.value.password as string,
         this.loginForm.value.key as string);
-      this.authService.login(form).subscribe(result => {
-        this.router.navigate(['/details']);
-      }, error => {
-        console.error(error);
-        this.barService.show('Error!');
+      this.authService.login(form).subscribe({
+        next: () => {
+          this.router.navigate(['/details']);
+        },
+        error: (e) => {
+        this.barService.showError(e);
+        }
       });
     }
   }
