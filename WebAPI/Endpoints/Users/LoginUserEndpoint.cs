@@ -26,6 +26,7 @@ public class LoginUserEndpoint : Endpoint<LoginUserRequest>
 
     public override async Task HandleAsync(LoginUserRequest req, CancellationToken ct)
     {
+        Logger.LogInformation($"User {req.Login} is trying to login");
         User? foundUser = null;
         List<UserData> userDatas = null;
 
@@ -36,6 +37,7 @@ public class LoginUserEndpoint : Endpoint<LoginUserRequest>
         }
         catch (Exception ex)
         {
+            Logger.LogError($"Exception during login of user {req.Login}: {ex.Message}");
             var exResponse = new ErrorResponse
             {
                 Message = ex.Message,
@@ -63,6 +65,7 @@ public class LoginUserEndpoint : Endpoint<LoginUserRequest>
 
             if (isAuthSuccess)
             {
+                Logger.LogInformation("Successful attempt.");
                 var response = new LoginUserResponse()
                 {
                     Data = foundUserData,
@@ -77,6 +80,7 @@ public class LoginUserEndpoint : Endpoint<LoginUserRequest>
             }
         }
 
+        Logger.LogInformation("Failed attempt.");
         var errorResponse = new ErrorResponse
         {
             StatusCode = StatusCodes.Status400BadRequest,

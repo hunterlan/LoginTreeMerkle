@@ -1,5 +1,4 @@
 ﻿using FastEndpoints.Security;
-using Microsoft.EntityFrameworkCore;
 using WebAPI.Helpers;
 using WebAPI.Models;
 using WebAPI.RequestsDTO.Users;

@@ -29,6 +29,7 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
         });
 });
+builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning);
 
 var app = builder.Build();
 app.UseCors(MyAllowSpecificOrigins);
