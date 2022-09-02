@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/helpers/authentication.service';
 import { SharedSnackBarService } from 'src/app/shared/services/shared-snack-bar.service';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
@@ -18,6 +19,7 @@ export class DetailsComponent implements OnInit {
 
   constructor(private readonly authService: AuthenticationService,
               private readonly barService: SharedSnackBarService,
+              private readonly spinnerService: SpinnerService,
               private readonly userService: UserService,
               private readonly dialog: MatDialog) {
     this.currentUser = new User();
@@ -47,6 +49,8 @@ export class DetailsComponent implements OnInit {
           }
         });
       }
+    }).add(() => {
+      this.spinnerService.hide();
     });
   }
 
