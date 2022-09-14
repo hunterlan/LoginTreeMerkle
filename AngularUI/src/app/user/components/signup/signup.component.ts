@@ -14,8 +14,17 @@ import { SpinnerService } from 'src/app/shared/services/spinner.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
+/**
+ * Class allows to sign up new user.
+ */
 export class SignupComponent implements OnInit, OnDestroy {
+  /**
+   * Maximal date, which user can choose. This website can use only user above 18.
+   */
   maxDate: Date;
+  /**
+   * Should website hide first part of registration?
+   */
   hideFirstPart: boolean = false;
   countries: Country[] = [];
   filteredCountries: Observable<Country[]> = new Observable<Country[]>();
@@ -55,6 +64,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Function hide the first part of signup or send data for registration new user.
+   */
   action(): void {
     if (this.hideFirstPart === false) {
       if (this.signupForm.valid) {
@@ -86,6 +98,9 @@ export class SignupComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+  * Function allows user back to first part of registration
+  */
   back(): void {
     this.hideFirstPart = false;
   }
@@ -94,6 +109,11 @@ export class SignupComponent implements OnInit, OnDestroy {
     console.log('Destroyed!');
   }
 
+  /**
+   * Function filter countries, which don't matcher of given string
+   * @param value name of countries, which include given sequence
+   * @returns filtered countries
+   */
   private _filter(value: string): Country[] {
     const filterValue = value.toLowerCase();
 

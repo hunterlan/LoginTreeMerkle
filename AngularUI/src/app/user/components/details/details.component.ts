@@ -19,6 +19,9 @@ import { ChangeUser } from '../../models/change-user';
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
+/**
+ * Class representation of user's details.
+ */
 export class DetailsComponent implements OnInit {
   currentUser: User;
   maxDate: Date;
@@ -67,6 +70,9 @@ export class DetailsComponent implements OnInit {
     this.personalForm.setValue(this.currentUser.data);
   }
 
+  /**
+   * Function, which can delete current user.
+   */
   delete() {
     const dialogRef = this.dialog.open(DeleteDialogComponent);
 
@@ -85,6 +91,9 @@ export class DetailsComponent implements OnInit {
     }).add(() => this.spinnerService.hide());
   }
 
+  /**
+   * Function, which can change current user
+   */
   change() {
     const dialogRef = this.dialog.open(ChangeDialogComponent);
 

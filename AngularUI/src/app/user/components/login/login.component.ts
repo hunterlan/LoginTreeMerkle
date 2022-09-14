@@ -11,6 +11,9 @@ import { LoginUser } from '../../models/login-user';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
+/**
+ * Class allows exist user to log in, if provided data are correct.
+ */
 export class LoginComponent implements OnInit {
   hidePassword = true;
   hideMD5 = true;
