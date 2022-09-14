@@ -7,8 +7,21 @@ public class CreateUserValidator : Validator<CreateUserRequest>
 {
     public CreateUserValidator()
     {
-        RuleFor(x => x.Age)
-            .GreaterThan(17)
+
+        // TO-DO: Change validation for birthday
+        RuleFor(x => x.Birthday)
+            .Must(birthday =>
+            {
+                DateTime today = new(DateTime.Now.Year - 18, DateTime.Now.Month, DateTime.Now.Day);
+
+                if (birthday != null && birthday.CompareTo(today) <= 0)
+                {
+                    return true;
+                }
+
+
+                return false;
+            })
             .WithMessage("You can't use this service while you're under 18");
 
         RuleFor(x => x.Email)
@@ -17,13 +30,9 @@ public class CreateUserValidator : Validator<CreateUserRequest>
             .EmailAddress()
             .WithMessage("Invalid email!");
 
-        RuleFor(x => x.FirstName)
+        RuleFor(x => x.FullName)
             .NotEmpty()
-            .WithMessage("Specify first name");
-
-        RuleFor(x => x.LastName)
-            .NotEmpty()
-            .WithMessage("Specify last name");
+            .WithMessage("Specify full name");
 
         RuleFor(x => x.Country)
             .NotEmpty()
@@ -46,7 +55,7 @@ public class CreateUserValidator : Validator<CreateUserRequest>
             .WithMessage("Minimum length is 8 symbols!")
             .Matches(new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$"))
             .WithMessage("Password should contain at least one lower, one upper, one number and special symbol");
-            
+
 
         RuleFor(x => x.PhoneNumber)
             .Empty()

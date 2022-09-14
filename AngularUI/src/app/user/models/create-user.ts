@@ -1,31 +1,18 @@
 export class CreateUser {
-  login: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  country: string;
-  city: string;
-  region: string;
-  postalCode: string;
-  phoneNumber: string;
-  age: number;
+  login: string = '';
+  password: string = '';
+  fullName: string = '';
+  email: string = '';
+  country: string = '';
+  city: string = '';
+  region!: string; // not necessary for signup
+  postalCode!: string; // not necessary for signup
+  phoneNumber!: string; // not necessary for signup
+  birthday: string = '';
 
 
-	constructor(login: string, password: string, firstName: string, lastName: string, email: string,
-              country: string, city: string, region: string, postalCode: string, phoneNumber: string,
-              age: number) {
-    this.login = login;
-    this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.country = country;
-    this.city = city;
-    this.region = region;
-    this.postalCode = postalCode;
-    this.phoneNumber = phoneNumber;
-    this.age = age;
+	constructor(init?:Partial<CreateUser>) {
+    Object.assign(this, init);
 	}
 
 }

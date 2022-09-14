@@ -76,12 +76,11 @@ public class CreateUserEndpoint : Endpoint<CreateUserRequest>
     {
         return new UserData()
         {
-            Age = request.Age,
+            Birthday = request.Birthday,
             City = request.City,
             Country = request.Country,
             Email = request.Email,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
+            FullName = request.FullName,
             Region = request.Region,
             PostalCode = request.PostalCode,
             PhoneNumber = request.PhoneNumber

@@ -11,27 +11,14 @@ export class User {
 }
 
 export class UserData {
-  key: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  country: string;
-  city: string;
-  region: string;
-  postalCode: string;
-  phoneNumber: string;
-  age: number;
-
-  constructor() {
-    this.key = '';
-    this.firstName = '';
-    this.lastName = '';
-    this.email = '';
-    this.country = '';
-    this.city = '';
-    this.region = '';
-    this.postalCode = '';
-    this.phoneNumber = '';
-    this.age = 0;
-  }
+  id: number = 0;
+  key: string = '';
+  fullName: string = '';
+  email: string = '';
+  country: string = '';
+  city: string = '';
+  region: string = '';
+  postalCode: string = '';
+  phoneNumber: string = '';
+  birthday: Date = new Date();
 }

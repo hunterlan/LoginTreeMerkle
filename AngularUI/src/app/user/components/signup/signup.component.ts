@@ -15,34 +15,36 @@ import { SpinnerService } from 'src/app/shared/services/spinner.service';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit, OnDestroy {
-
+  maxDate: Date;
   hideFirstPart: boolean = false;
   countries: Country[] = [];
   filteredCountries: Observable<Country[]> = new Observable<Country[]>();
 
   signupForm = new FormGroup({
-    login: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{8,}$')]),
-    confirmPassword: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    login: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.minLength(6)]}),
+    password: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{8,}$')]}),
+    confirmPassword: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    email: new FormControl('', {nonNullable: true, validators: [Validators.required, Validators.email]}),
   });
 
   personalForm = new FormGroup({
-    firstName: new FormControl('', [Validators.required]),
-    lastName: new FormControl('', [Validators.required]),
-    city: new FormControl('', [Validators.required]),
-    region: new FormControl('', [Validators.nullValidator]),
-    postalCode: new FormControl('', [Validators.nullValidator]),
-    country: new FormControl('', [Validators.required]),
-    phoneNumber: new FormControl('', [Validators.pattern('^\\+?\\d+$')]),
-    age: new FormControl(18, [Validators.required, Validators.min(18)])
+    fullName: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    city: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    region: new FormControl('', {nonNullable: true, validators: [Validators.nullValidator]}),
+    postalCode: new FormControl('', {nonNullable: true, validators: [Validators.nullValidator]}),
+    country: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
+    phoneNumber: new FormControl('', {nonNullable: true, validators: [Validators.pattern('^\\+?\\d+$')]}),
+    birthday: new FormControl('', {nonNullable: true, validators: [Validators.required]})
   })
 
   constructor(private readonly authService: AuthenticationService,
               private readonly barService: SharedSnackBarService,
               private readonly spinnerService: SpinnerService,
               private readonly countryService: CountryService,
-              private readonly router: Router) { }
+              private readonly router: Router) {
+    const currentYear = new Date().getFullYear();
+    this.maxDate = new Date(currentYear - 18, new Date().getMonth(), new Date().getDay());
+  }
 
   ngOnInit(): void {
     this.countryService.getCountries().subscribe(countries => {
@@ -62,10 +64,12 @@ export class SignupComponent implements OnInit, OnDestroy {
       if (this.signupForm.valid && this.personalForm.valid) {
         const signupData = this.signupForm.value;
         const personalData = this.personalForm.value;
-        const dataUser = new CreateUser(signupData.login ?? '', signupData.password ?? '',
-        personalData.firstName ?? '', personalData.lastName ?? '', signupData.email ?? '',
-        personalData.country ?? '', personalData.city ?? '', personalData.region ?? '',
-        personalData.postalCode ?? '', personalData.phoneNumber ?? '', personalData.age ?? 0);
+        const dataUser = new CreateUser({
+          login: signupData.login, password: signupData.password,
+          fullName: personalData.fullName, email: signupData.email,
+          country: personalData.country, city: personalData.city,
+          region: personalData.region, postalCode: personalData.postalCode,
+          phoneNumber: personalData.phoneNumber, birthday: personalData.birthday});
         this.spinnerService.show();
         this.authService.create(dataUser).subscribe(
           {

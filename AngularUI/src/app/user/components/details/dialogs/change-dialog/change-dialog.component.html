@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Change data user</h1>
+<div mat-dialog-content>
+  <div [formGroup]="loginForm">
+    <mat-form-field appearance="standard">
+      <mat-label>New login</mat-label>
+      <input matInput formControlName="login">
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password">
+      <mat-hint>You have to remember this password</mat-hint>
+    </mat-form-field>
+  </div>
+</div>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="null">Cancel</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button [mat-dialog-close]="loginForm.value" [disabled]="!loginForm.valid">Change</button>
+</mat-dialog-actions>

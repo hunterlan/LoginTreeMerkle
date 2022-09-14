@@ -18,11 +18,10 @@ public class Creator : ICreator
 
 
         var firstNameHash = Convert.ToBase64String(
-            sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.FirstName)));
-        var lastNameHash = Convert.ToBase64String(
-            sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.LastName)));
-        var flnHash = Convert.ToBase64String(
-            sha512.ComputeHash(Encoding.UTF8.GetBytes(firstNameHash + lastNameHash)));
+            sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.FullName)));
+        var phoneNumberHash = sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.PhoneNumber ?? ""));
+        var flnPnHash = Convert.ToBase64String(
+            sha512.ComputeHash(Encoding.UTF8.GetBytes(firstNameHash + phoneNumberHash)));
 
         var countryHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.Country)));
@@ -38,21 +37,19 @@ public class Creator : ICreator
         var erHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(emailHash + regionHash)));
 
-        var ageHash = Convert.ToBase64String(sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.Age.ToString())));
+        var ageHash = Convert.ToBase64String(sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.Birthday.ToString("MM/dd/yyyy"))));
         var postalCodeHash = Convert.ToBase64String(sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.PostalCode ?? "")));
         var apHash = Convert.ToBase64String(
             sha512.ComputeHash(Encoding.UTF8.GetBytes(ageHash + postalCodeHash)));
 
-        var phoneNumberHash = sha512.ComputeHash(Encoding.UTF8.GetBytes(userData.PhoneNumber ?? ""));
-
         return Convert.ToBase64String(
-            sha512.ComputeHash(Encoding.UTF8.GetBytes(lpHash + flnHash + ccHash + erHash + apHash + phoneNumberHash)));
+            sha512.ComputeHash(Encoding.UTF8.GetBytes(lpHash + flnPnHash + ccHash + erHash + apHash)));
     }
 
     public string CreateHashOnData(UserData userData)
     {
         using MD5 creator = MD5.Create();
-        return Convert.ToBase64String(creator.ComputeHash(Encoding.UTF8.GetBytes(userData.FirstName + userData.LastName +
+        return Convert.ToBase64String(creator.ComputeHash(Encoding.UTF8.GetBytes(userData.FullName + userData.Birthday +
                                                    userData.City + userData.Country + userData.Email)));
     }
 

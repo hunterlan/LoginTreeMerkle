@@ -1,17 +1,53 @@
 <mat-card>
-  <mat-card-title>{{currentUser.data.firstName}} {{currentUser.data.lastName}}</mat-card-title>
+  <mat-card-title>{{currentUser.data.fullName}}</mat-card-title>
   <mat-card-content>
-    <p><b>Phone number:</b> {{currentUser.data.phoneNumber === '' ? 'Not given' : currentUser.data.phoneNumber}}</p>
-    <p><b>Email:</b> {{currentUser.data.email}}</p>
-    <p><b>Age:</b> {{currentUser.data.age}}</p>
-    <p><b>City:</b> {{currentUser.data.city}}</p>
-    <p><b>Postal code:</b> {{currentUser.data.postalCode === '' ? 'Not given' : currentUser.data.postalCode}}</p>
-    <p><b>Region:</b> {{currentUser.data.region === '' ? 'Not given' : currentUser.data.region}}</p>
-    <p><b>Country:</b> {{currentUser.data.country}}</p>
+    <div [formGroup]="personalForm" style="display: grid">
+      <mat-form-field appearance="standard">
+        <mat-label>Full name</mat-label>
+        <input matInput formControlName="fullName">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Phone number</mat-label>
+        <input matInput formControlName="phoneNumber">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email">
+        <mat-error *ngIf="personalForm.controls.email.invalid">Not a valid email</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Age</mat-label>
+        <input matInput [matDatepicker]="picker" [max]="maxDate" formControlName="birthday">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Postal code</mat-label>
+        <input matInput formControlName="postalCode">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Region</mat-label>
+        <input matInput formControlName="region">
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Country</mat-label>
+        <input matInput formControlName="country" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let country of filteredCountries | async" [value]="country.name.common">
+            {{country.name.common}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button (click)="delete()">Delete</button>
-    <button mat-button (click)="change()" disabled>Change</button>
+    <button mat-raised-button (click)="delete()" color="warn">Delete</button>
+    <button mat-raised-button (click)="change()" [disabled]="personalForm.hasError && !personalForm.dirty">Change</button>
+    <button mat-raised-button (click)="userLogout()">Logout</button>
   </mat-card-actions>
 </mat-card>
 

@@ -4,16 +4,14 @@ namespace WebAPI.RequestsDTO.Users;
 
 public class ChangeUserRequest
 {
-    public string OldLogin { get; set; }
+    public string OldLogin { get; set; } = string.Empty;
 
     public string? NewLogin { get; set; }
 
     //Can be provided old or new 
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 
-    public string? FirstName { get; set; }
-
-    public string? LastName { get; set; }
+    public string? FullName { get; set; }
 
     public string? Email { get; set; }
 
@@ -27,7 +25,7 @@ public class ChangeUserRequest
 
     public string? PhoneNumber { get; set; }
 
-    public int? Age { get; set; }
+    public DateTime? Birthday { get; set; }
 
-    public string Key { get; set; }
+    public string Key { get; set; } = string.Empty;
 }

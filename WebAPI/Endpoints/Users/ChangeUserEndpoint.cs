@@ -35,7 +35,7 @@ public class ChangeUserEndpoint : Endpoint<ChangeUserRequest>
         {
             try
             {
-                var loginProvide = req.NewLogin ?? req.OldLogin;
+                var loginProvide = string.IsNullOrWhiteSpace(req.NewLogin) ? req.OldLogin : req.NewLogin;
                 var mappedUserData = MapUserData(req, foundUserData);
                 mappedUserData.Key = _creator.CreateHashOnData(mappedUserData);
                 var changedUser = MapUser(loginProvide, req.Password, mappedUserData);
@@ -82,12 +82,11 @@ public class ChangeUserEndpoint : Endpoint<ChangeUserRequest>
     {
         return new UserData()
         {
-            Age = request.Age ?? foundUserData.Age,
+            Birthday = request.Birthday ?? foundUserData.Birthday,
             City = request.City ?? foundUserData.City,
             Country = request.Country ?? foundUserData.Country,
             Email = request.Email ?? foundUserData.Email,
-            FirstName = request.FirstName ?? foundUserData.FirstName,
-            LastName = request.LastName ?? foundUserData.LastName,
+            FullName = request.FullName ?? foundUserData.FullName,
             Region = request.Region ?? foundUserData.Region,
             PostalCode = request.PostalCode ?? foundUserData.PostalCode,
             PhoneNumber = request.PhoneNumber ?? foundUserData.PhoneNumber

@@ -18,6 +18,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { KeyDialogComponent } from './components/details/dialogs/key-dialog/key-dialog.component';
 import { FormsModule } from '@angular/forms';
 import {ClipboardModule} from '@angular/cdk/clipboard';
+import { ChangeDialogComponent } from './components/details/dialogs/change-dialog/change-dialog.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -26,7 +29,8 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
     SignupComponent,
     DetailsComponent,
     DeleteDialogComponent,
-    KeyDialogComponent
+    KeyDialogComponent,
+    ChangeDialogComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +45,9 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
     MatDialogModule,
     RouterModule,
     MatAutocompleteModule,
-    FormsModule
+    FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class UserModule { }

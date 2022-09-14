@@ -16,15 +16,14 @@ public class CreateUserSummary : Summary<CreateUserEndpoint>
         {
             Login = "userLogin",
             Password = "1@3Tu456789O",
-            FirstName = "John",
-            LastName = "Smith",
+            FullName = "John",
             Email = "john.smith@mail.com",
             Country = "USA",
             City = "Washington",
             Region = "Optional",
             PostalCode = "Optional",
             PhoneNumber = "+624127",
-            Age = 30
+            Birthday = new DateTime(2001, 1, 1)
         };
         Response<CreateUserResponse>(200, "OK response with body");
         Response<ErrorResponse>(500, "See error message");

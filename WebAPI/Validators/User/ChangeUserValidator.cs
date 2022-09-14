@@ -7,12 +7,24 @@ public class ChangeUserValidator : Validator<ChangeUserRequest>
 {
     public ChangeUserValidator()
     {
-        RuleFor(x => x.Age)
+        // TO-DO: change validation for age
+        RuleFor(x => x.Birthday)
             .Empty()
-            .When(x => x.Age is null)
+            .When(x => x.Birthday is null)
             .NotEmpty()
-            .GreaterThan(17)
-            .When(x => x.Age is not null)
+            .Must(birthday =>
+            {
+                DateTime today = new(DateTime.Now.Year - 18, DateTime.Now.Month, DateTime.Now.Day);
+
+                if (birthday.Value.CompareTo(today) <= 0)
+                {
+                    return true;
+                }
+
+
+                return false;
+            })
+            .When(x => x.Birthday is not null)
             .WithMessage("You can't use this service while you're under 18");
 
         RuleFor(x => x.Email)

@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { LoginUser } from '../models/login-user';
-import { User } from '../models/user';
-import { CreateUser } from '../models/create-user';
+import { ChangeUser } from '../models/change-user'
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +24,9 @@ export class UserService {
     };
 
     return this.httpClient.delete(`${this.finalUrl}/delete`, options);
+  }
+
+  change(changedUser: ChangeUser) {
+    return this.httpClient.post<any>(`${this.finalUrl}/change`, changedUser);
   }
 }
